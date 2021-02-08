@@ -36,10 +36,10 @@ public class MapsClient {
             Address address = client
                     .get()
                     .uri(uriBuilder -> uriBuilder
-                            .path("/maps/")
-                            .queryParam("lat", location.getLat())
-                            .queryParam("lon", location.getLon())
-                            .build()
+                        .path("/maps/")
+                        .queryParam("lat", location.getLat())
+                        .queryParam("lon", location.getLon())
+                        .build()
                     )
                     .retrieve().bodyToMono(Address.class).block();
 

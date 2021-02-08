@@ -1,0 +1,1 @@
+INSERT INTO price (id, vehicle_id, currency, price) VALUES (1, 1, 'EUR', 999), (2, 2,'EUR', 1980), (3, 3, 'EUR', 12000), (4, 4, 'BRL', 45000), (5, 5, 'BRL', 95000)
