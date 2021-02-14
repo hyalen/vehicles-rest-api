@@ -22,6 +22,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 public class PricingServiceTests {
     private final Integer VALID_VEHICLE_ID = 5;
     private final Integer INVALID_VEHICLE_ID = 100;
+
     @Autowired
     private TestRestTemplate rTemplate;
 
