@@ -33,16 +33,16 @@ public class MapsClient {
     public Location getAddress(Location location) {
         try {
             Address address = client
-                    .get()
-                    .uri(uriBuilder -> uriBuilder
-                        .host("localhost")
-                        .port("8083")
-                        .path("/maps/")
-                        .queryParam("lat", location.getLat())
-                        .queryParam("lon", location.getLon())
-                        .build()
-                    )
-                    .retrieve().bodyToMono(Address.class).block();
+                .get()
+                .uri(uriBuilder -> uriBuilder
+                    .host("localhost")
+                    .port("8083")
+                    .path("/maps/")
+                    .queryParam("lat", location.getLat())
+                    .queryParam("lon", location.getLon())
+                    .build()
+                )
+                .retrieve().bodyToMono(Address.class).block();
 
             mapper.map(Objects.requireNonNull(address), location);
 

@@ -57,30 +57,27 @@ public class CarService {
     }
 
     /**
-     * Either creates or updates a vehicle, based on prior existence of car
-     * @param car A car object, which can be either new or existing
-     * @return the new/updated car is stored in the repository
+     * Creates a vehicle
+     * @param car A car object
+     * @return the new car is stored in the repository
      */
     public Car save(Car car) {
-        // setting the location from the Boogle Maps API
-        Location location = mapsClient.getAddress(car.getLocation());
-        car.setLocation(location);
+        return repository.save(car);
+    }
 
-        if (car.getId() != null) {
-            return repository.findById(car.getId())
-                .map(carToBeUpdated -> {
-                    carToBeUpdated.setDetails(car.getDetails());
-                    return repository.save(carToBeUpdated);
-                }).orElseThrow(CarNotFoundException::new);
-        }
+    /**
+     * Updates a vehicle
+     * @param car A car object
+     * @return the updated car is stored in the repository
+     */
+    public Car update(Car car) {
+        Car storedCar = repository.findById(car.getId()).orElseThrow(CarNotFoundException::new);
 
-        Car storedCar = repository.save(car);
+        storedCar.setDetails(car.getDetails());
+        storedCar.setCondition(car.getCondition());
+        storedCar.setLocation(car.getLocation());
 
-        // getting the price based on the id saved in the DB
-        String price = priceClient.getPrice(storedCar.getId());
-        storedCar.setPrice(price);
-
-        return storedCar;
+        return repository.save(storedCar);
     }
 
     /**
@@ -88,10 +85,6 @@ public class CarService {
      * @param id the ID number of the car to delete
      */
     public void delete(Long id) {
-        /**
-          * Finding the car by ID from the `repository` if it exists.
-          * If it does not exist, throw a CarNotFoundException
-         */
         Car car = repository.findById(id).orElseThrow(CarNotFoundException::new);
         repository.delete(car);
     }
